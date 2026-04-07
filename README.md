@@ -7,20 +7,25 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{overflow-x:hidden;font-family:Arial;color:#fff;text-align:center}
+html,body{
+overflow-x:hidden;
+font-family:Arial;
+color:#fff;
+text-align:center;
+}
 
 body{
 background: linear-gradient(180deg,#0b0b0b,#1a0033);
 }
 
-/* fundo animado */
+/* fundo animado corrigido */
 body::before{
 content:"";
 position:fixed;
 top:0;
 left:0;
-width:100%;
-height:100%;
+width:120%;
+height:120%;
 background: radial-gradient(circle at 20% 30%, rgba(123,44,255,0.3), transparent),
             radial-gradient(circle at 80% 70%, rgba(255,0,100,0.3), transparent);
 z-index:-1;
@@ -29,7 +34,7 @@ animation: moverBg 10s infinite alternate;
 
 @keyframes moverBg{
 0%{transform:translate(0,0)}
-100%{transform:translate(-50px, -50px)}
+100%{transform:translate(-30px, -30px)}
 }
 
 /* header */
@@ -99,13 +104,12 @@ transform:scale(1.05);
 }
 
 .highlight{border:2px solid #7b2cff}
-
 .price{font-size:22px;color:#7b2cff;margin:10px 0}
 
 /* animações */
 @keyframes pulsar{
 0%{transform:scale(1)}
-50%{transform:scale(1.08)}
+50%{transform:scale(1.05)}
 100%{transform:scale(1)}
 }
 
@@ -194,7 +198,7 @@ font-size:22px;
 <div style="margin-top:30px;">
 <div style="display:inline-block;background:#111;padding:10px;border-radius:30px;box-shadow:0 0 20px rgba(0,0,0,0.5);animation: flutuar 3s infinite;">
 <img src="https://i.postimg.cc/SsXBVsR2/Screenshot-20260406-193310-IBO-REVENDA.jpg"
-style="width:220px;border-radius:20px;animation: brilho 2s infinite;box-shadow:0 0 25px rgba(0,0,0,0.7);">
+style="width:220px;border-radius:20px;animation: brilho 2s infinite;box-shadow:0 0 25px rgba(0,0,0,0.7);max-width:100%;">
 </div>
 </div>
 
@@ -220,39 +224,19 @@ style="width:220px;border-radius:20px;animation: brilho 2s infinite;box-shadow:0
 <div class="card">
 <h3>1 Tela</h3>
 <div class="price">R$ 24,90</div>
-<a class="btn" href="https://wa.me/5582996062108?text=Quero%201%20tela">Assinar</a>
+<a class="btn" href="#">Assinar</a>
 </div>
 
 <div class="card highlight">
 <h3>2 Telas ⭐ Mais Vendido</h3>
 <div class="price">R$ 34,90</div>
-<a class="btn" href="https://wa.me/5582996062108?text=Quero%202%20telas">Assinar</a>
+<a class="btn" href="#">Assinar</a>
 </div>
 
 <div class="card">
 <h3>3 Telas</h3>
 <div class="price">R$ 39,90</div>
-<a class="btn" href="https://wa.me/5582996062108?text=Quero%203%20telas">Assinar</a>
-</div>
-
-<h2>🔥 Planos Anuais</h2>
-
-<div class="card">
-<h3>1 Tela</h3>
-<div class="price">R$ 179,90</div>
-<a class="btn" href="https://wa.me/5582996062108?text=Quero%20anual%201%20tela">Assinar</a>
-</div>
-
-<div class="card highlight">
-<h3>2 Telas ⭐ Melhor Custo</h3>
-<div class="price">R$ 229,90</div>
-<a class="btn" href="https://wa.me/5582996062108?text=Quero%20anual%202%20telas">Assinar</a>
-</div>
-
-<div class="card">
-<h3>3 Telas</h3>
-<div class="price">R$ 264,90</div>
-<a class="btn" href="https://wa.me/5582996062108?text=Quero%20anual%203%20telas">Assinar</a>
+<a class="btn" href="#">Assinar</a>
 </div>
 
 </div>
@@ -267,19 +251,34 @@ navigator.clipboard.writeText("3c3a8735-4475-4340-8090-649f95432cfa");
 alert("Chave Pix copiada!");
 }
 
-let time=600;
-setInterval(()=>{
-let m=Math.floor(time/60);
-let s=time%60;
-document.getElementById('timer').innerHTML=m+":"+(s<10?'0':'')+s;
+/* TIMER */
+let time = 600;
+const timerInterval = setInterval(()=>{
+let m = Math.floor(time/60);
+let s = time%60;
+document.getElementById('timer').innerHTML = m+":"+(s<10?'0':'')+s;
+
+if(time <= 0){
+clearInterval(timerInterval);
+} else {
 time--;
-if(time<0) time=600;
+}
 },1000);
 
+/* CONTADOR SUAVE */
+let pessoas = 12;
+
 setInterval(()=>{
-document.getElementById("online").innerHTML = Math.floor(Math.random()*15)+5;
+let variacao = Math.floor(Math.random()*3) - 1;
+pessoas += variacao;
+
+if(pessoas < 8) pessoas = 8;
+if(pessoas > 25) pessoas = 25;
+
+document.getElementById("online").innerHTML = pessoas;
 },3000);
 
+/* POPUP */
 const nomes=["João - SP","Maria - RJ","Carlos - MG","Ana - BA","Tiago - Lisboa","Sofia - Porto"];
 
 setInterval(()=>{
@@ -287,7 +286,11 @@ let popup=document.getElementById("popup");
 let nome=nomes[Math.floor(Math.random()*nomes.length)];
 popup.innerHTML="💰 "+nome+" acabou de assinar!";
 popup.style.display="block";
-setTimeout(()=>{popup.style.display="none";},3000);
+
+setTimeout(()=>{
+popup.style.display="none";
+},3000);
+
 },8000);
 </script>
 
